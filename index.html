@@ -1,36 +1,52 @@
 <!DOCTYPE html>
-<htmtl lang="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced QR Code Generator</title>
+  <title>QR Code Converter</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>QR Code Generator</h1>
+    <h1>QR Code Converter</h1>
 
-    <input type="text" id="text-input" placeholder="Enter text or URL..." />
-
-    <div class="controls">
-      <label>QR Size:
-        <input type="number" id="qr-size" min="100" max="500" value="200" />
-      </label>
-      <label>QR Color:
-        <input type="color" id="qr-color" value="#000000" />
-      </label>
-      <label>Background:
-        <input type="color" id="bg-color" value="#ffffff" />
-      </label>
+    <div class="toggle">
+      <button id="gen-tab" class="active">Generate QR</button>
+      <button id="dec-tab">Decode QR</button>
     </div>
 
-    <button onclick="downloadQR()">Download QR</button>
+    <!-- GENERATE -->
+    <div id="generate-section">
+      <input type="text" id="text-input" placeholder="Enter text or URL..." />
 
-    <div id="qr-code"></div>
+      <div class="controls">
+        <label>QR Size:
+          <input type="number" id="qr-size" min="100" max="500" value="200" />
+        </label>
+        <label>QR Color:
+          <input type="color" id="qr-color" value="#000000" />
+        </label>
+        <label>Background:
+          <input type="color" id="bg-color" value="#ffffff" />
+        </label>
+      </div>
+
+      <button onclick="downloadQR()">Download QR</button>
+      <div id="qr-code"></div>
+    </div>
+
+    <!-- DECODE -->
+    <div id="decode-section" class="hidden">
+      <input type="file" id="qr-upload" accept="image/*" />
+      <div id="drop-area">Drag & Drop QR Image Here</div>
+      <p id="decoded-output"></p>
+      <button onclick="copyDecodedText()">Copy Text</button>
+    </div>
   </div>
 
-  <!-- Library -->
+  <!-- LIBRARIES -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
