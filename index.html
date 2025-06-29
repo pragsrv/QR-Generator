@@ -1,20 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<htmtl lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced QR Code Generator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>QR Code Generator</h1>
+
     <input type="text" id="text-input" placeholder="Enter text or URL..." />
-    <button onclick="generateQR()">Generate QR</button>
+
+    <div class="controls">
+      <label>QR Size:
+        <input type="number" id="qr-size" min="100" max="500" value="200" />
+      </label>
+      <label>QR Color:
+        <input type="color" id="qr-color" value="#000000" />
+      </label>
+      <label>Background:
+        <input type="color" id="bg-color" value="#ffffff" />
+      </label>
+    </div>
+
+    <button onclick="downloadQR()">Download QR</button>
+
     <div id="qr-code"></div>
   </div>
 
-  <!-- QRCode generator library -->
+  <!-- Library -->
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script src="script.js"></script>
 </body>
