@@ -1,52 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QR Code Converter</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <script src="libs/qrcode.min.js"></script>
+  <script src="libs/jsQR.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <h1>QR Code Converter</h1>
-
-    <div class="toggle">
-      <button id="gen-tab" class="active">Generate QR</button>
-      <button id="dec-tab">Decode QR</button>
+    <div class="header">
+      <h1>QR Code Converter</h1>
+      <button id="theme-toggle" class="theme-toggle">
+        <span id="theme-icon">🌙</span>
+      </button>
     </div>
 
-    <!-- GENERATE -->
-    <div id="generate-section">
-      <input type="text" id="text-input" placeholder="Enter text or URL..." />
+    <div class="tabs">
+      <button id="generate-tab" class="tab active">Generate</button>
+      <button id="decode-tab" class="tab">Decode</button>
+    </div>
 
-      <div class="controls">
-        <label>QR Size:
-          <input type="number" id="qr-size" min="100" max="500" value="200" />
-        </label>
-        <label>QR Color:
-          <input type="color" id="qr-color" value="#000000" />
-        </label>
-        <label>Background:
-          <input type="color" id="bg-color" value="#ffffff" />
-        </label>
+    <div class="content">
+      <!-- Generate Section -->
+      <div id="generate-section" class="section active">
+        <div class="input-group">
+          <label for="text-input">Text or URL</label>
+          <input type="text" id="text-input" placeholder="Enter text or URL..."/>
+        </div>
+        <div class="input-group">
+          <label for="style-preset">Style</label>
+          <select id="style-preset">
+            <option value="default">Classic Black</option>
+            <option value="blue">Ocean Blue</option>
+            <option value="purple">Royal Purple</option>
+            <option value="green">Forest Green</option>
+            <option value="pink">Rose Pink</option>
+            <option value="orange">Sunset Orange</option>
+            <option value="custom">Custom Colors</option>
+          </select>
+        </div>
+        <div id="custom-colors" class="custom-colors" style="display:none;">
+          <div class="color-picker-group">
+            <div class="color-picker">
+              <label for="qr-color">QR Code Color</label>
+              <input type="color" id="qr-color" value="#000000"/>
+            </div>
+            <div class="color-picker">
+              <label for="bg-color">Background Color</label>
+              <input type="color" id="bg-color" value="#ffffff"/>
+            </div>
+          </div>
+        </div>
+        <div id="qr-code" class="qr-display">
+          <div class="empty-state">Enter text above to generate QR code</div>
+        </div>
+        <div class="controls">
+          <button class="btn" onclick="downloadQR()">Download PNG</button>
+          <button class="btn btn-secondary" onclick="clearQR()">Clear</button>
+        </div>
       </div>
 
-      <button onclick="downloadQR()">Download QR</button>
-      <div id="qr-code"></div>
-    </div>
+      <!-- Decode Section -->
+      <div id="decode-section" class="section">
+        <div class="input-group">
+          <label for="qr-upload">Upload QR Code Image</label>
+          <input type="file" id="qr-upload" accept="image/*"/>
+        </div>
+        <div id="drop-area" class="drop-area">
+          <div>Drop QR code image here or click to upload</div>
+        </div>
+        <div id="decoded-output" class="output">Decoded text will appear here...</div>
+        <div class="controls">
+          <button class="btn" onclick="copyDecodedText()">Copy Text</button>
+          <button class="btn btn-secondary" onclick="clearDecoded()">Clear</button>
+        </div>
+        <div id="copy-success" class="success-message">Text copied to clipboard!</div>
+        <div id="error-message" class="error-message"></div>
+      </div>
 
-    <!-- DECODE -->
-    <div id="decode-section" class="hidden">
-      <input type="file" id="qr-upload" accept="image/*" />
-      <div id="drop-area">Drag & Drop QR Image Here</div>
-      <p id="decoded-output"></p>
-      <button onclick="copyDecodedText()">Copy Text</button>
+      <!-- History Section -->
+      <div class="history-section">
+        <h3>Recent Activity</h3>
+        <ul id="history-log" class="history-list">
+          <li class="history-item">No recent activity</li>
+        </ul>
+      </div>
     </div>
   </div>
-
-  <!-- LIBRARIES -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
